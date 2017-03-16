@@ -43,7 +43,7 @@
 \begin{questions}
 \question
 %Question1
-\begin{solution}Written by Ci Zhang, revised by Xinyi Gong and Junjie Cheng
+\begin{solution}Written by Ci Zhang, revised by Xinyi Gong and Junjie Cheng \\
 We will use the disjoint-set data structure in this question. \\
 \\
 Discuss: \\
@@ -130,7 +130,7 @@ We will prove it is the smallest one by giving a counter example such that $A(n)
 
 We are charging 12 for each \proc{Insert} operation and 0 for each \proc{Diminish} operation.
 
-The credit invariant is, after any operation, the credit balance is always no less than $12$ times the number of elements in the set (i.e. credit balance $\ge 12m$ always hold after any operation).
+The credit invariant is, after any operation, the credit balance is always no less than $12$ times the number of elements in the set (i.e. credit balance $\ge 12n$ always hold after any operation).
 
 Proof: We define $k$ to be the number of operations performed. We can prove this by induction on $k$. 
 
@@ -142,7 +142,7 @@ If the first operation is \proc{Diminish}, then according to the algorithm, sinc
 
 Induction step: We assume the credit invariant holds for $k=p-1$, and now we are showing it also holds for $k=p$.
 
-By induction hypothesis, the credit balance is now no less than $12m$, where $n$ is a non-negative number. Let's use $c$ to denote credit balance, we have $c_{p-1} \ge 12n_{p-1}$.
+By induction hypothesis, the credit balance is now no less than $12n$, where $n$ is a non-negative number. Let's use $c$ to denote credit balance, we have $c_{p-1} \ge 12n_{p-1}$.
 
 If the $p^{th}$ operation is \proc{Insert}, then $n$ will increment by one, and credit balance $c$ is increased by $12$ since no pairwise comparisons between the elements of the set is made. So, we have $$c_p = c_{p-1} + 12 \ge 12n_{p-1} + 12 = 12(n_{p-1}+1) = 12n_p$$. The credit invariant holds.
 
@@ -156,7 +156,7 @@ So the new relationship between $n$ and $c$ is $$c_p \ge 6n_{p-1} = 12\frac{n_{p
 
 Thus, the credit invariant is $c \ge 12n$.
 
-According to the credit invariant, the credit balance is always non-negative (since the balance is always no less than a multiple of non-negative number), i.e, we have always charged enough up front to pay for \proc{Diminish} operations. Thus, for any sequence of $k$ \proc{Insert} and \proc{Diminish} operations, the total amortized cost is an upper bound on the total actual cost. Also note that the total amortized cost is $12$ times the number of \proc{Diminish} operations, the amortized cost is in $O(k)$. Thus, for each operation, the amortized cost is $\frac{O(k)}{k} = O(1)$.
+According to the credit invariant, the credit balance is always non-negative (since the balance is always no less than a multiple of non-negative number), i.e, we have always charged enough up front to pay for \proc{Diminish} operations. Thus, for any sequence of $k$ \proc{Insert} and \proc{Diminish} operations, the total amortized cost is an upper bound on the total actual cost. Also note that the total amortized cost is $12$ times the number of \proc{Diminish} operations (which is less than $12k$), the amortized cost is in $O(k)$. Thus, for each operation, the amortized cost is $\frac{O(k)}{k} = O(1)$.
 
 
 \end{solution}
