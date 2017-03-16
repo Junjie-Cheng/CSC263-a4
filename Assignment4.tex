@@ -1,5 +1,7 @@
 \documentclass[11pt, answers]{exam}
 \renewcommand{\baselinestretch}{1.05}
+\newcommand\floor[1]{\lfloor#1\rfloor}
+\newcommand\ceil[1]{\lceil#1\rceil}
 \usepackage{amsmath,amsthm,verbatim,amssymb,amsfonts,amscd, graphicx}
 \usepackage{graphics}
 
@@ -42,6 +44,21 @@
 \question
 %Question1
 \begin{solution}Written by Ci Zhang, revised by Xinyi Gong and Junjie Cheng
+We will use the disjoint-set data structure in this question. \\
+\\
+Discuss: \\
+Since there is no information about what the connected undirected graph G looks like, it is hard to design the process where connected G is as the original graph while the disconnected set of nodes is the outcome. Therefore, we think about this question in the opposite direction. That is, given a set of disconnected nodes $V =\left\{ {1,2,3,...,n}\right\}$, we need to ADD edges in the order of $ e_m,...,e_2,e_1 $, such that just before adding $e_i$, every connected component of the graph has at most $\floor{\frac{n}{4}}$ nodes. but after adding $e_i$ the graph has at least one connected component with more than $\floor{\frac{n}{4}}$ nodes.\\
+\\
+Process:
+\begin{enumerate}
+  \item Firstly, we create a set for each node in $V =\left\{ {1,2,3,...,n}\right\}$, thus each set contains only one node.\\
+  It takes a constant amount of time to create one set by MAKE-SET operation described in the text book. So the worst-case running time for this process is $O(n)$.
+  \item Secondly, we add edges in the order of $ e_m,...,e_{i+1} $, connecting vertices, doing UNION operation for the two sets of vertices. We apply union by rank and compression in this step. For each $e_k$ to add, $e_k$ connect two vertices, say $V_1$ and $V_2$, where $v$ and $u$ are in the connected graphs that contain $\mid V_1\mid$ and $\mid V_2\mid$ nodes respectively.By repeatedly doing this in a certain order, we are able to get a graph consisting of at most 5 connected sub-graph (subset), where 4 of them have exactly $\floor{\frac{n}{4}}$ nodes, and the other connected graph (set) has at most $\floor{\frac{n}{4}}$ nodes, probably no nodes. Now we have the property that every connected component of the graph has at most $\floor{\frac{n}{4}}$ nodes.
+  Finally, we add the edge $e_i$, connecting any two of the different connected graphs. By what we have achieved in step2, no matter which two sets we are going to be connected, they will become a set that contains more than$\floor{\frac{n}{4}}$ nodes.\\
+  In the worst case, we need to union sets m-4 times to find the specific $e_i$. And we apply both union by rank and path compression in this step. Thus, if we do m union operations, the worst-case running time is $O(m\alpha (n))$ , where $\alpha (n)$ is a very slowly growing function, which we define in Section 21.4. We can view the running time as linear in m in all practical situations.\\
+  Therefore, in this step, the worst-case running time is  $O((m-4)\alpha (n)) = O(m-4) = O(m)$  \\
+\end{enumerate}
+Adding up the above two steps, it takes O(n+m) to find the specific node $e_i$ in the list of $ e_1,e_2,...,e_m $. But in the actual practice, we need to remove 4 edges before remove $e_i$, which takes a constant amount of time.And the number of edges m is greater than the number of vertices. Therefore, the running complexity of the whole process is $O(m+n) = O(m)$.
 
 
 \end{solution}
