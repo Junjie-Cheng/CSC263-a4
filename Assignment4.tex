@@ -1,0 +1,98 @@
+\documentclass[11pt, answers]{exam}
+\renewcommand{\baselinestretch}{1.05}
+\usepackage{amsmath,amsthm,verbatim,amssymb,amsfonts,amscd, graphicx}
+\usepackage{graphics}
+
+\usepackage{afterpage}
+\usepackage{caption}
+
+\usepackage{fancybox}
+
+\usepackage{clrscode3e}
+
+\topmargin0.0cm
+\headheight0.0cm
+\headsep0.0cm
+\oddsidemargin0.0cm
+\textheight23.0cm
+\textwidth16.5cm
+\footskip1.0cm
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem*{surfacecor}{Corollary 1}
+\newtheorem{conjecture}{Conjecture}  
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+ \begin{document}
+ 
+
+
+\title{CSC263: Assignment 4}
+\date{March 16th, 2017}
+\author{Ci Zhang, Xinyi Gong, Junjie Cheng}
+\maketitle
+
+\unframedsolutions
+
+\begin{questions}
+\question
+%Question1
+\begin{solution}Written by Ci Zhang, revised by Xinyi Gong and Junjie Cheng
+
+
+\end{solution}
+
+\question
+%Question2
+\begin{solution}Written by Xinyi Gong, revised by Ci Zhang and Junjie Cheng
+
+\end{solution}
+
+
+\question
+%Question3
+\begin{solution}Written by Junjie Cheng, revised by Ci Zhang and Xinyi Gong
+
+
+We are charging 12 for each \proc{Insert} operation and 0 for each \proc{Diminish} operation.
+
+The credit invariant is, after any operation, the credit balance is always no less than $12$ times the number of elements in the set (i.e. credit balance $\ge 12m$ always hold after any operation).
+
+Proof: We define $k$ to be the number of operations performed. We can prove this by induction on $k$. 
+
+Base case: $k=1$
+
+Before the first operation is performed, the credit balance and the number of element in the set (i.e. $n$) are both $0$. If the first operation is \proc{Insert}, then we charge $12$ but do not make any comparisons. So after the operation there will be $1$ element, with the credit balance $12$. Credit invariant holds.
+
+If the first operation is \proc{Diminish}, then according to the algorithm, since the set is empty, no pairwise comparisons between the elements of the set will be made. $0$ credit is charged and no comparisons are made; $n$ remains $0$ as there is no insertion. The credit invariant also holds.
+
+Induction step: We assume the credit invariant holds for $k=p-1$, and now we are showing it also holds for $k=p$.
+
+By induction hypothesis, the credit balance is now no less than $12m$, where $n$ is a non-negative number. Let's use $c$ to denote credit balance, we have $c_{p-1} \ge 12n_{p-1}$.
+
+If the $p^{th}$ operation is \proc{Insert}, then $n$ will increment by one, and credit balance $c$ is increased by $12$ since no pairwise comparisons between the elements of the set is made. So, we have $$c_p = c_{p-1} + 12 \ge 12n_{p-1} + 12 = 12(n_{p-1}+1) = 12n_p$$. The credit invariant holds.
+
+If the $p^{th}$ operation is \proc{Diminish}, then no credit is charged and we will use the credit balance to perform the comparison, meanwhile, the set size $n$ is also decreased.
+
+The first step of the algorithm for \proc{Diminish} performs at most $5n_{p-1}$ pairwise comparisons and the second step performs $n_{p-1}$ comparisons (one comparison is made between each element in the set and $m$ obtained in step one). The third and fourth step does not involve any comparisons. So in total, $5n_{p-1}+n_{p-1}=6n_{p-1}$ pairwise comparisons between the elements in the set are made. The credit balance now becomes $c_p=c_{p-1}-6n_{p-1} \ge 12n_{p-1} - 6n_{p-1} = 6n_{p-1}$. 
+
+On the other hand, the number of elements in the set is diminished to $\lfloor \frac{n_{p-1}}{2} \rfloor$. So after the operation the number of elements left in the set is $n_p = \lfloor \frac{n_{p-1}}{2} \rfloor \le \frac{n_{p-1}}{2}$.
+
+So the new relationship between $n$ and $c$ is $$c_p \ge 6n_{p-1} = 12\frac{n_{p-1}}{2} \ge 12 n_p$$. The credit invariant still holds.
+
+Thus, the credit invariant is $c \ge 12n$.
+
+According to the credit invariant, the credit balance is always non-negative (since the balance is always no less than a multiple of non-negative number), i.e, we have always charged enough up front to pay for \proc{Diminish} operations. Thus, for any sequence of $k$ \proc{Insert} and \proc{Diminish} operations, the total amortized cost is an upper bound on the total actual cost. Also note that the total amortized cost is $12$ times the number of \proc{Diminish} operations, the amortized cost is in $O(k)$. Thus, for each operation, the amortized cost is $\frac{O(k)}{k} = O(1)$.
+
+
+\end{solution}
+
+\end{questions}
+
+
+
+\end{document}
